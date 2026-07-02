@@ -275,6 +275,33 @@ Since the labeling step already recorded real token counts and correctness for b
 
 Two things worth noticing. First, always calling the expensive model wasn't more accurate here, it was less accurate and used more tokens, a reminder that "bigger model" isn't automatically the safer default. Second, the fine-tuned router matched the baseline's accuracy while using 45% fewer total tokens, purely by removing the per-request classification call. That gap is the entire value of fine-tuning a router instead of prompting for one: the decision itself is nearly free.
 
+## Step 7: Watch it decide, live
+
+Numbers in a table are convincing, but watching the router make the decision in real time makes the "the classifier is free, the LLM call isn't" point land immediately. The repo includes a small Streamlit app for exactly that:
+
+```bash
+pip install -r requirements-demo.txt
+streamlit run demo_app.py
+```
+
+Right after it starts, the sidebar shows which models are wired up as the cheap and escalation tiers, and the session totals sit at zero since nothing has run yet:
+
+![Streamlit demo UI immediately after starting, sidebar showing model tiers and zeroed session totals](https://imagedelivery.net/K11gkZF3xaVyYzFESMdWIQ/demo-startup/public)
+
+Typing a query and clicking "Run through router" reveals each step as it happens: the fine-tuned router's local decision, the baseline's real classification call, then the actual answer. Once it finishes, a bar chart appears comparing that query's token cost under both approaches:
+
+![Demo UI after running one query, showing a bar chart comparing fine-tuned router tokens against prompt-based baseline tokens](https://imagedelivery.net/K11gkZF3xaVyYzFESMdWIQ/demo-chart-after-query/public)
+
+Hovering the chart shows the exact figures, and a query log table underneath keeps a running record for the session, useful for narrating a demo without needing to read numbers off a sidebar mid-sentence:
+
+![Demo UI with a tooltip showing exact token values on hover, plus a query log table below the chart](https://imagedelivery.net/K11gkZF3xaVyYzFESMdWIQ/demo-tooltip-and-log/public)
+
+The sidebar updates alongside it. After that single "What is 12 + 7?" query, the fine-tuned router had spent 119 tokens total against the baseline's 314, a 62% reduction from one query alone, since the baseline pays for its classification call every single time and the fine-tuned router never does:
+
+![Sidebar detail showing session totals after one query: 119 fine-tuned tokens vs 314 baseline tokens, 195 tokens saved, 62% fewer tokens](https://imagedelivery.net/K11gkZF3xaVyYzFESMdWIQ/demo-sidebar-totals/public)
+
+That gap compounds with every query in the session, which is the whole pitch for fine-tuning the router in the first place: the savings from Step 6 aren't a one-time artifact of the held-out test set, they show up query by query, live.
+
 ## Frequently Asked Questions
 
 **Does a fine-tuned router only make sense if there's a big accuracy gap between tiers?**
