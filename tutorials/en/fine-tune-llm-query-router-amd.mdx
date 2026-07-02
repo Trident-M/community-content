@@ -1,6 +1,6 @@
 ---
-title: "Fine-Tune a Query Router for the AMD Developer Hackathon's Token-Efficient Track"
-description: "Learn how to fine-tune a local classifier that routes queries to Fireworks-hosted models for AI hackathons, cutting tokens without an LLM call on every request."
+title: "Fine-Tune a Query Router to Cut LLM Costs for AI Hackathons"
+description: "Fine-tune a query router for AI hackathons that cuts LLM costs by routing queries to cheaper Fireworks-hosted models, without losing accuracy on hard queries."
 image: "https://imagedelivery.net/K11gkZF3xaVyYzFESMdWIQ/fine-tune-llm-query-router-amd-cover/public"
 authorUsername: "stevekimoi"
 ---
@@ -308,7 +308,7 @@ That gap compounds with every query in the session, which is the whole pitch for
 No, it makes sense whenever a prompt-based classifier would otherwise cost tokens on every request. Even when the routing decision is nearly always the same, as it was here, a local classifier makes that decision for free, while a prompt-based one keeps paying for it.
 
 **Can I use this approach in other AI hackathons, not just AMD's?**
-Yes. Any hackathon that scores token efficiency, and many do, rewards routing to the cheapest model that can still pass the accuracy bar. The methodology here (empirically label your own data, fine-tune small, evaluate against a real baseline) transfers directly.
+Yes. Any hackathon that scores token efficiency, including LLM hackathons and other agentic AI hackathons, rewards routing to the cheapest model that can still pass the accuracy bar. The methodology here (empirically label your own data, fine-tune small, evaluate against a real baseline) transfers directly.
 
 **What if my dataset comes back this skewed too?**
 Treat it as a finding, not a failure. Report the real accuracy gap (or lack of one) between your tiers before assuming escalation is worth building. If it turns out your cheap model handles almost everything, that's useful information for picking `ALLOWED_MODELS` on submission day.
