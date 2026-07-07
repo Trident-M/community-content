@@ -54,6 +54,8 @@ MODEL_CHEAP=accounts/fireworks/models/gpt-oss-120b
 MODEL_EXPENSIVE=accounts/fireworks/models/deepseek-v4-pro
 ```
 
+> **Disclaimer:** if you're participating in the [AMD Developer Hackathon: ACT II](https://lablab.ai/ai-hackathons/amd-developer-hackathon-act-ii), the official Participant FAQ lists the **MiniMax** and **Kimi K** series as the models you may use on Fireworks AI. The two model IDs above are stand-ins from the serverless catalog at the time of writing, used to demonstrate the methodology, so swap in the IDs from the hackathon's `ALLOWED_MODELS` list before submitting. That's exactly why they live in environment variables.
+
 ## Step 2: Build a labeled dataset by actually testing your models
 
 You can't know which queries need the expensive model until you measure it. Generate queries across the categories your hackathon track actually scores (this one lists eight: factual knowledge, math reasoning, sentiment, summarization, NER, code debugging, logic, and code generation), each with a known correct answer:
