@@ -1,0 +1,53 @@
+---
+title: "Fireworks Inference API"
+author: "fireworks-ai"
+description: "Fireworks Inference API is an OpenAI-compatible API for calling open-weight models like Llama, DeepSeek, and Qwen, with serverless per-token pricing, streaming, function calling, and structured output."
+---
+
+# Fireworks Inference API
+
+The Fireworks Inference API lets developers call open-weight language, vision, and embedding models through a single OpenAI-compatible endpoint at `https://api.fireworks.ai/inference/v1`. Switching between models is a one-line change: every model is addressed by an ID like `accounts/fireworks/models/deepseek-v3p1`, so the same client code can route requests to different models at runtime. Existing OpenAI SDK code works by pointing `base_url` at Fireworks and swapping in a Fireworks API key.
+
+| General | |
+|---------|--|
+| **Author** | [Fireworks AI](https://fireworks.ai) |
+| **Type** | Model Inference API (OpenAI-compatible) |
+| **Base URL** | `https://api.fireworks.ai/inference/v1` |
+| **Model Library** | [fireworks.ai/models](https://fireworks.ai/models) |
+| **Documentation** | [Querying text models](https://docs.fireworks.ai/guides/querying-text-models) |
+| **Pricing** | [Serverless per-token pricing](https://fireworks.ai/pricing), cached input tokens billed at 50% |
+
+## Start building with the Fireworks Inference API
+
+Serverless inference needs zero setup: pick a model ID from the [model library](https://fireworks.ai/models), send a request to `/chat/completions`, and pay per token. The `/models` endpoint lists which models are callable serverlessly at any moment, which is worth checking before building around a specific model, since some models in the catalog require a dedicated on-demand deployment instead. On-demand deployments are billed by GPU-second rather than per token and offer lower latency, no hard rate limits, and a broader model selection including custom model uploads.
+
+Requests can be made with the native Fireworks Python SDK, the OpenAI Python or JavaScript SDKs, or plain HTTP. Streaming is supported with `stream=True`, and closing the connection stops generation so you are not billed for ungenerated tokens. See what the community has built with Fireworks at [lablab.ai](https://lablab.ai/tech).
+
+### Fireworks Inference API Tutorials
+<TechTutorials/>
+
+---
+
+### Getting Started
+
+- [Querying text models](https://docs.fireworks.ai/guides/querying-text-models) Chat completions, OpenAI SDK compatibility, and streaming
+- [Model library](https://fireworks.ai/models) Browse available models and check serverless availability
+- [Function calling](https://docs.fireworks.ai/guides/function-calling) Wire models into tool-calling and agent pipelines
+- [Structured output](https://docs.fireworks.ai/structured-responses/structured-response-formatting) JSON mode and grammar-constrained generation
+- [On-demand deployments](https://docs.fireworks.ai/guides/ondemand-deployments) Dedicated GPU deployments for models not available serverlessly
+
+---
+
+### Key Use Cases
+
+**Multi-model routing agents**
+Because every model sits behind the same API and differs only by model ID, routing agents can send easy queries to a small, cheap model and escalate hard ones to a larger model without changing client code. Keeping model IDs in environment variables makes swapping tiers a config change rather than a code change.
+
+**Token-scored hackathon submissions**
+AMD-sponsored hackathons on lablab.ai route all answer-generating inference through the Fireworks API via a `FIREWORKS_BASE_URL` environment variable, with token usage scored directly. Members of the AMD AI Developer Program receive $50 in Fireworks credits. Explore [upcoming AI hackathons](https://lablab.ai/events) to find events built on Fireworks.
+
+**Agent and tool-calling pipelines**
+Function calling, JSON mode, and grammar-constrained generation let models return machine-parseable output directly, without extra parsing logic between the model and the rest of the pipeline.
+
+**Drop-in OpenAI migration**
+Teams with existing OpenAI SDK code can test open-weight models by changing only the base URL, API key, and model ID, keeping the rest of the integration untouched.
