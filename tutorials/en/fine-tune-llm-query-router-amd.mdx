@@ -5,6 +5,16 @@ image: "https://imagedelivery.net/K11gkZF3xaVyYzFESMdWIQ/fine-tune-llm-query-rou
 authorUsername: "stevekimoi"
 ---
 
+<iframe
+  width="100%"
+  height="450"
+  src="https://www.youtube.com/embed/lmtmKMZ1AOs"
+  title="Token-Efficient Query Router Demo"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
 ## Introduction
 
 AMD Developer Hackathon: ACT II names its first track "Hybrid Token-Efficient Routing Agent." The name is a hint: the winning approach isn't picking one model and calling it on every query, it's routing each query to the cheapest model that can still answer it correctly. Most routing guides solve this with a prompt: ask an LLM "is this easy or hard?" before answering. That works, but it means paying for an extra model call on every single request just to make a decision.
